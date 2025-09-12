@@ -12,4 +12,5 @@ module.exports = {
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'html'],
   setupFilesAfterEnv: ['<rootDir>/tests/setup.ts'],
+  forceExit: true, // Force Jest to exit after tests complete
 };

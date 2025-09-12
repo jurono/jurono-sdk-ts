@@ -32,7 +32,13 @@ export class JuronoApiClient {
 
   private createTimeoutSignal(timeout: number): AbortSignal {
     const controller = new AbortController();
-    setTimeout(() => controller.abort(), timeout);
+    const timeoutId = setTimeout(() => controller.abort(), timeout);
+    
+    // Clear timeout if signal is already aborted to prevent memory leaks
+    controller.signal.addEventListener('abort', () => {
+      clearTimeout(timeoutId);
+    }, { once: true });
+    
     return controller.signal;
   }
 

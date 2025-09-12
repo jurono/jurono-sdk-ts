@@ -1,6 +1,12 @@
 // Mock global fetch for tests
 global.fetch = jest.fn();
 
+// Clear all timers after each test to prevent Jest hanging
+afterEach(() => {
+  jest.clearAllTimers();
+  jest.useRealTimers();
+});
+
 // Helper to create mock fetch responses
 export const mockFetch = (response: any, status = 200, ok = true) => {
   const mockHeaders = new Map();
