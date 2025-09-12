@@ -14,10 +14,12 @@ jobs:
           name: Install dependencies
           command: npm ci
       - run:
+          name: Authenticate with npm registry
+          command: npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
+      - run:
           name: Release with release-it
           command: npm run release -- --ci
           environment:
-            NPM_TOKEN: $NPM_TOKEN
             GITHUB_TOKEN: $GH_TOKEN
 
 workflows:
