@@ -19,8 +19,6 @@ jobs:
       - run:
           name: Release with release-it
           command: npm run release -- --ci
-          environment:
-            GITHUB_TOKEN: $GH_TOKEN
 
 workflows:
   version: 2

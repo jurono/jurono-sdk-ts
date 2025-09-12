@@ -10,11 +10,7 @@
     "access": "public"
   },
   "github": {
-    "release": true,
-    "releaseName": "v${version}",
-    "autoGenerate": {
-      "notes": true
-    }
+    "release": false
   },
   "hooks": {
     "before:init": [
