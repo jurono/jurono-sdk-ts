@@ -23,7 +23,7 @@ npm install @jurono/sdk
 ### Server-Side (SSG/SSR/API Routes)
 
 ```ts
-import { createServerSDK, withJuronoSSR, withJuronoAPI } from '@jurono/sdk';
+import { createServerSDK, withJuronoSSR, withJuronoAPI } from '@jurono/sdk/server';
 
 // Direct usage
 const sdk = createServerSDK({ apiKey: 'YOUR_API_KEY' });
@@ -55,7 +55,7 @@ export default withJuronoAPI(
 ### Client-Side with React
 
 ```tsx
-import { JuronoProvider, useAuth, useUsers, useQuery } from '@jurono/sdk';
+import { JuronoProvider, useAuth, useUsers } from '@jurono/sdk/react';
 
 // App setup
 function App() {

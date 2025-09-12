@@ -123,11 +123,10 @@ export interface PrefetchOptions {
 }
 
 export class DataPrefetcher {
-  private sdk: ServerSDK;
   private cache: Map<string, { data: any; timestamp: number; ttl: number }> = new Map();
 
-  constructor(sdk: ServerSDK) {
-    this.sdk = sdk;
+  constructor(_sdk: ServerSDK) {
+    // SDK reference not needed for basic caching functionality
   }
 
   private getCacheKey(method: string, params?: any): string {
@@ -141,8 +140,7 @@ export class DataPrefetcher {
   async prefetch<T>(
     method: () => Promise<ApiResponse<T>>,
     key: string,
-    ttl: number = 60000, // 1 minute default
-    options?: PrefetchOptions
+    ttl: number = 60000 // 1 minute default
   ): Promise<T | null> {
     const cacheKey = this.getCacheKey(key);
     const cached = this.cache.get(cacheKey);

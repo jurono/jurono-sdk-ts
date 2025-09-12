@@ -114,6 +114,7 @@ export function useQuery<TData = any>(
       const interval = setInterval(executeQuery, refetchInterval);
       return () => clearInterval(interval);
     }
+    return undefined;
   }, [executeQuery, refetchInterval, enabled]);
 
   useEffect(() => {
@@ -122,6 +123,7 @@ export function useQuery<TData = any>(
       window.addEventListener('focus', handleFocus);
       return () => window.removeEventListener('focus', handleFocus);
     }
+    return undefined;
   }, [executeQuery, refetchOnWindowFocus, enabled]);
 
   useEffect(() => {
