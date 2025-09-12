@@ -1,0 +1,29 @@
+{
+  "git": {
+    "commitMessage": "chore: release ${version}",
+    "tagName": "v${version}",
+    "requireBranch": "main",
+    "requireCleanWorkingDir": false
+  },
+  "npm": {
+    "publish": true,
+    "access": "public"
+  },
+  "github": {
+    "release": true,
+    "releaseName": "v${version}",
+    "autoGenerate": {
+      "notes": true
+    }
+  },
+  "hooks": {
+    "before:init": [
+      "npm run typecheck",
+      "npm test"
+    ],
+    "after:bump": [
+      "npm run generate:types",
+      "npm run build"
+    ]
+  }
+}

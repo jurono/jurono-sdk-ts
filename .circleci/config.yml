@@ -14,17 +14,11 @@ jobs:
           name: Install dependencies
           command: npm ci
       - run:
-          name: Generate types
-          command: npm run generate:types
-      - run:
-          name: Build SDK
-          command: npm run build
-      - run:
-          name: Semantic Release
-          command: npx semantic-release
+          name: Release with release-it
+          command: npm run release -- --ci
           environment:
             NPM_TOKEN: $NPM_TOKEN
-            GH_TOKEN: $GH_TOKEN
+            GITHUB_TOKEN: $GH_TOKEN
 
 workflows:
   version: 2

@@ -205,9 +205,11 @@ export class JuronoApiClient {
       statusText: response.statusText,
       headers: (() => {
         const headers: Record<string, string> = {};
-        response.headers.forEach((value, key) => {
-          headers[key] = value;
-        });
+        if (response.headers && typeof response.headers.forEach === 'function') {
+          response.headers.forEach((value, key) => {
+            headers[key] = value;
+          });
+        }
         return headers;
       })()
     };

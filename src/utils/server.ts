@@ -125,8 +125,9 @@ export interface PrefetchOptions {
 export class DataPrefetcher {
   private cache: Map<string, { data: any; timestamp: number; ttl: number }> = new Map();
 
-  constructor(_sdk: ServerSDK) {
-    // SDK reference not needed for basic caching functionality
+  constructor(sdk: ServerSDK) {
+    // SDK reference not needed for basic caching functionality but kept for interface compatibility
+    void sdk;
   }
 
   private getCacheKey(method: string, params?: any): string {
