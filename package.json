@@ -74,10 +74,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jurono/sdk-js-api.git"
+    "url": "https://github.com/jurono/jurono-sdk-ts.git"
   },
   "bugs": {
-    "url": "https://github.com/jurono/sdk-js-api/issues"
+    "url": "https://github.com/jurono/jurono-sdk-ts/issues"
   },
-  "homepage": "https://github.com/jurono/sdk-js-api#readme"
+  "homepage": "https://github.com/jurono/jurono-sdk-ts#readme"
 }
