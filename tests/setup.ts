@@ -9,10 +9,10 @@ afterEach(() => {
 
 // Helper to create mock fetch responses
 export const mockFetch = (response: any, status = 200, ok = true) => {
-  const mockHeaders = new Map();
-  mockHeaders.set('content-type', 'application/json');
-  mockHeaders.forEach = function(callback: any) {
-    this.entries().forEach(([key, value]: [string, string]) => callback(value, key));
+  const mockHeaders = {
+    forEach: (callback: (value: string, key: string) => void) => {
+      callback('application/json', 'content-type');
+    }
   };
 
   (global.fetch as jest.Mock).mockResolvedValue({
