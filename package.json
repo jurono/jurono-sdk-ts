@@ -19,7 +19,20 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "generate:types": "npx openapi-typescript https://api.jurono.eu/api/docs-json -o src/types/api.d.ts",
+    "prepublishOnly": "npm run generate:types && npm run build",
+    "publish": "npm publish --access public"
+  },
+  "release": {
+    "branches": ["main"],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      "@semantic-release/github"
+    ]
   },
   "keywords": [
     "jurono",
