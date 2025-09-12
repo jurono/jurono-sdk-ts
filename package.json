@@ -25,7 +25,9 @@
     "publish": "npm publish --access public"
   },
   "release": {
-    "branches": ["main"],
+    "branches": [
+      "main"
+    ],
     "plugins": [
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",
@@ -48,6 +50,11 @@
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "16.0.1",
     "@rollup/plugin-typescript": "12.1.4",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/github": "^11.0.6",
+    "@semantic-release/npm": "^12.0.2",
+    "@semantic-release/release-notes-generator": "^14.1.0",
     "@types/jest": "30.0.0",
     "@types/node": "24.3.1",
     "@typescript-eslint/eslint-plugin": "8.43.0",
@@ -57,6 +64,7 @@
     "openapi-typescript": "^7.9.1",
     "rollup": "^4.50.1",
     "rollup-plugin-dts": "^6.2.3",
+    "semantic-release": "^24.2.8",
     "ts-jest": "^29.4.1",
     "tslib": "^2.8.1",
     "typescript": "^5.9.2"
