@@ -30,4 +30,7 @@ workflows:
   version: 2
   release-workflow:
     jobs:
-      - release
+      - release:
+          filters:
+            branches:
+              only: main
