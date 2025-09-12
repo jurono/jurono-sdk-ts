@@ -1,5 +1,4 @@
 // Types for Jurono API SDK
-export interface JuronoApiOptions {
-  apiKey: string;
-  baseUrl?: string;
-}
+export * from './client';
+export * from './errors';
+export type { components, operations, paths } from './api';
