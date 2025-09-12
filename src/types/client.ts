@@ -1,6 +1,5 @@
 export interface JuronoApiOptions {
   apiKey: string;
-  baseUrl?: string;
   timeout?: number;
   retries?: number;
   retryDelay?: number;

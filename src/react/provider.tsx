@@ -37,7 +37,7 @@ export function JuronoProvider({ children, ...options }: JuronoProviderProps): J
       mandates: new Mandates(client),
       documents: new Documents(client),
     };
-  }, [options.apiKey, options.baseUrl, options.timeout, options.retries, options.retryDelay]);
+  }, [options.apiKey, options.timeout, options.retries, options.retryDelay]);
 
   return (
     <JuronoContext.Provider value={sdk}>

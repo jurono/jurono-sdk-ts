@@ -3,7 +3,7 @@ import { Mandates } from '../src/endpoints/mandates';
 import { mockFetch } from './setup';
 
 describe('Mandates', () => {
-  const client = new JuronoApiClient({ apiKey: 'test-key', baseUrl: 'http://localhost:3000/api' });
+  const client = new JuronoApiClient({ apiKey: 'test-key' });
   const mandates = new Mandates(client);
 
   beforeEach(() => {

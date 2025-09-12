@@ -23,7 +23,7 @@ export class JuronoApiClient {
   private responseInterceptors: ResponseInterceptor[] = [];
 
   constructor(options: JuronoApiOptions) {
-    this.baseUrl = options.baseUrl || 'https://api.jurono.eu/api';
+    this.baseUrl = 'https://api.jurono.eu/api';
     this.apiKey = options.apiKey;
     this.defaultTimeout = options.timeout || 30000;
     this.defaultRetries = options.retries ?? 3;

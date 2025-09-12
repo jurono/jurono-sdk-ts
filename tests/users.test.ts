@@ -3,7 +3,7 @@ import { Users } from '../src/endpoints/users';
 import { mockFetch } from './setup';
 
 describe('Users', () => {
-  const client = new JuronoApiClient({ apiKey: 'test-key', baseUrl: 'http://localhost:3000/api' });
+  const client = new JuronoApiClient({ apiKey: 'test-key' });
   const users = new Users(client);
 
   beforeEach(() => {
