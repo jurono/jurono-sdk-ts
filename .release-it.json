@@ -24,6 +24,7 @@
     "after:bump": [
       "npm run generate:types",
       "npm run build"
-    ]
+    ],
+    "before:npm:publish": "echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > ~/.npmrc"
   }
 }
