@@ -23,7 +23,9 @@ export class JuronoApiClient {
   private responseInterceptors: ResponseInterceptor[] = [];
 
   constructor(options: JuronoApiOptions) {
-    this.baseUrl = process.env.API_BASEURL || process.env.NEXT_PUBLIC_API_URL || 'https://api.jurono.eu/api';
+    // Normalize base URL (remove trailing slash)
+    let baseUrl = process.env.API_BASEURL || process.env.NEXT_PUBLIC_API_URL || 'https://api.jurono.eu/api';
+    this.baseUrl = baseUrl.replace(/\/$/, '');
     this.apiKey = options.apiKey;
     this.defaultTimeout = options.timeout || 30000;
     this.defaultRetries = options.retries ?? 3;
@@ -175,7 +177,6 @@ export class JuronoApiClient {
     config?: RequestConfig
   ): Promise<ApiResponse<T>> {
     const url = `${this.baseUrl}${endpoint}`;
-    console.log(`[Jurono SDK] ${method} ${url}`);
     const timeout = config?.timeout || this.defaultTimeout;
     const retries = config?.retries ?? this.defaultRetries;
     
