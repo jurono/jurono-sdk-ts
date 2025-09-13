@@ -175,6 +175,7 @@ export class JuronoApiClient {
     config?: RequestConfig
   ): Promise<ApiResponse<T>> {
     const url = `${this.baseUrl}${endpoint}`;
+    console.log(`[Jurono SDK] ${method} ${url}`);
     const timeout = config?.timeout || this.defaultTimeout;
     const retries = config?.retries ?? this.defaultRetries;
     
