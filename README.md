@@ -82,24 +82,28 @@ export const getServerSideProps = withJuronoSSR(
 For Next.js applications, use the dedicated Next.js bundle with pre-built server actions:
 
 ```typescript
-import { loginWithSDK, getCurrentUser, logoutUser } from '@jurono/sdk/nextjs';
+import { login, getUser, logout, refresh } from '@jurono/sdk/nextjs';
 
 // Replace your custom auth-actions.ts with:
 export async function loginAction(email: string, password: string) {
-  return await loginWithSDK(email, password, {
+  return await login(email, password, {
     requireAdminRole: true,
     cookieName: 'admin-token'
   });
 }
 
 export async function getUserAction() {
-  return await getCurrentUser({ 
+  return await getUser({ 
     requireAdminRole: true 
   });
 }
 
 export async function logoutAction() {
-  return await logoutUser();
+  return await logout();
+}
+
+export async function refreshAction() {
+  return await refresh();
 }
 ```
 
