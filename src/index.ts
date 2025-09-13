@@ -3,8 +3,5 @@ export * from './client';
 export * from './endpoints/index';
 export * from './types';
 
-// React exports (conditionally available)
-export * from './react';
-
-// Server utilities
+// Server utilities  
 export * from './utils';
