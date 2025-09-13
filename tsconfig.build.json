@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "src/client.ts",
+    "src/endpoints/**/*",
+    "src/types/**/*",
+    "src/utils/**/*",
+    "src/react/**/*",
+    "src/index.ts",
+    "src/server.ts",
+    "src/react.ts"
+  ],
+  "exclude": ["node_modules", "dist", "tests/**/*"]
+}

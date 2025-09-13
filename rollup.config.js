@@ -4,7 +4,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 import dts from 'rollup-plugin-dts';
 
-const external = ['react'];
+const external = ['react', 'next/headers'];
 
 export default [
   // Main build (includes everything)
@@ -112,6 +112,42 @@ export default [
     plugins: [dts()],
     output: {
       file: 'dist/react.d.ts',
+      format: 'es',
+    },
+  },
+  // Next.js build (includes server actions)
+  {
+    input: 'src/nextjs.ts',
+    external,
+    plugins: [
+      resolve(),
+      commonjs(),
+      json(),
+      typescript({
+        tsconfig: './tsconfig.json',
+        declaration: false,
+      }),
+    ],
+    output: [
+      {
+        file: 'dist/nextjs.js',
+        format: 'cjs',
+        sourcemap: true,
+      },
+      {
+        file: 'dist/nextjs.esm.js',
+        format: 'es',
+        sourcemap: true,
+      },
+    ],
+  },
+  // Type definitions - Next.js
+  {
+    input: 'src/nextjs.ts',
+    external,
+    plugins: [dts()],
+    output: {
+      file: 'dist/nextjs.d.ts',
       format: 'es',
     },
   },

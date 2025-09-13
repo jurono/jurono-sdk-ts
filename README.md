@@ -77,6 +77,32 @@ export const getServerSideProps = withJuronoSSR(
 );
 ```
 
+#### Next.js Server Actions
+
+For Next.js applications, use the dedicated Next.js bundle with pre-built server actions:
+
+```typescript
+import { loginWithSDK, getCurrentUser, logoutUser } from '@jurono/sdk/nextjs';
+
+// Replace your custom auth-actions.ts with:
+export async function loginAction(email: string, password: string) {
+  return await loginWithSDK(email, password, {
+    requireAdminRole: true,
+    cookieName: 'admin-token'
+  });
+}
+
+export async function getUserAction() {
+  return await getCurrentUser({ 
+    requireAdminRole: true 
+  });
+}
+
+export async function logoutAction() {
+  return await logoutUser();
+}
+```
+
 ## API Reference
 
 ### Authentication
@@ -322,8 +348,9 @@ npm run typecheck
 The SDK is built with multiple entry points to optimize bundle size:
 
 - **Main Bundle** (`@jurono/sdk`): Core client and API endpoints (~75KB)
-- **React Bundle** (`@jurono/sdk/react`): React hooks and components (~70KB)
+- **React Bundle** (`@jurono/sdk/react`): React hooks and components (~70KB)  
 - **Server Bundle** (`@jurono/sdk/server`): Server-side utilities (~20KB)
+- **Next.js Bundle** (`@jurono/sdk/nextjs`): Next.js server actions with cookies (~25KB)
 
 ## License
 

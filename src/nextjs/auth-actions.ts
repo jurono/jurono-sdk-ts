@@ -25,7 +25,7 @@ export interface AdminUser {
 }
 
 /**
- * Server action to login with email and password
+ * Next.js server action to login with email and password
  * Validates admin role and sets secure cookie
  */
 export async function loginWithSDK(
@@ -115,7 +115,7 @@ export async function loginWithSDK(
 }
 
 /**
- * Server action to get current authenticated user
+ * Next.js server action to get current authenticated user
  * Validates token and returns user data
  */
 export async function getCurrentUser(
@@ -180,7 +180,7 @@ export async function getCurrentUser(
 }
 
 /**
- * Server action to logout current user
+ * Next.js server action to logout current user
  * Clears authentication cookie
  */
 export async function logoutUser(
@@ -225,7 +225,7 @@ export async function logoutUser(
 }
 
 /**
- * Server action to refresh authentication token
+ * Next.js server action to refresh authentication token
  */
 export async function refreshAuth(
   options?: {

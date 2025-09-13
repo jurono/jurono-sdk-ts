@@ -24,6 +24,11 @@
       "import": "./dist/react.esm.js",
       "require": "./dist/react.js",
       "types": "./dist/react.d.ts"
+    },
+    "./nextjs": {
+      "import": "./dist/nextjs.esm.js",
+      "require": "./dist/nextjs.js",
+      "types": "./dist/nextjs.d.ts"
     }
   },
   "files": [
@@ -34,7 +39,7 @@
     "build": "rollup -c",
     "build:watch": "rollup -c -w",
     "dev": "rollup -c -w",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit --skipLibCheck --project tsconfig.build.json",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix",
     "test": "jest",
