@@ -5,3 +5,9 @@ node_modules
 dist
 build
 CLAUDE.md
+AGENTS.md
+
+# Test coverage reports
+coverage/
+*.lcov
+.nyc_output

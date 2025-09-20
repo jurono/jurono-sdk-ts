@@ -5,6 +5,12 @@ import { Organizations } from '../endpoints/organizations';
 import { Clients } from '../endpoints/clients';
 import { Mandates } from '../endpoints/mandates';
 import { Documents } from '../endpoints/documents';
+import { Admin } from '../endpoints/admin';
+import { Billing } from '../endpoints/billing';
+import { Compliance } from '../endpoints/compliance';
+import { Blog } from '../endpoints/blog';
+import { Tokens } from '../endpoints/tokens';
+import { LawyerProfiles } from '../endpoints/lawyer-profiles';
 import { JuronoApiOptions, ApiResponse } from '../types';
 
 export interface ServerSDK {
@@ -15,13 +21,19 @@ export interface ServerSDK {
   clients: Clients;
   mandates: Mandates;
   documents: Documents;
+  admin: Admin;
+  billing: Billing;
+  compliance: Compliance;
+  blog: Blog;
+  tokens: Tokens;
+  lawyerProfiles: LawyerProfiles;
 }
 
 let serverSDKInstance: ServerSDK | null = null;
 
 export function createServerSDK(options: JuronoApiOptions): ServerSDK {
   const client = new JuronoApiClient(options);
-  
+
   return {
     client,
     auth: new Auth(client),
@@ -30,6 +42,12 @@ export function createServerSDK(options: JuronoApiOptions): ServerSDK {
     clients: new Clients(client),
     mandates: new Mandates(client),
     documents: new Documents(client),
+    admin: new Admin(client),
+    billing: new Billing(client),
+    compliance: new Compliance(client),
+    blog: new Blog(client),
+    tokens: new Tokens(client),
+    lawyerProfiles: new LawyerProfiles(client),
   };
 }
 
