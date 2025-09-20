@@ -2309,6 +2309,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/lawyers/profile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get my lawyer profile */
+        get: operations["LawyerProfilesController_getOwn"];
+        /** Update my lawyer profile */
+        put: operations["LawyerProfilesController_update"];
+        /** Create my lawyer profile */
+        post: operations["LawyerProfilesController_create"];
+        /** Soft delete my lawyer profile */
+        delete: operations["LawyerProfilesController_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/forms/intake": {
         parameters: {
             query?: never;
@@ -2619,6 +2639,97 @@ export interface paths {
         put?: never;
         /** Export a compliance report as PDF */
         post: operations["ComplianceController_exportReport"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/stats/overview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Public overview statistics
+         * @description Returns high-level, anonymous overview statistics
+         */
+        get: operations["StatsController_overview"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/stats/practice-areas": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Practice areas statistics
+         * @description Returns practice area statistics with optional geographic and country filtering
+         */
+        get: operations["StatsController_practiceAreas"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/practice-areas": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List practice areas with localized translations */
+        get: operations["PracticeAreasController_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/practice-areas/{identifier}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a single practice area with translations */
+        get: operations["PracticeAreasController_detail"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/practice-areas/{identifier}/translations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all translations for a practice area */
+        get: operations["PracticeAreasController_translations"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -2941,6 +3052,266 @@ export interface components {
             description?: string;
             /** Format: uuid */
             organizationId?: string;
+        };
+        CreateLawyerProfileDto: {
+            /** @example lawyer@example.com */
+            email: string;
+            /** @example Anna */
+            firstName: string;
+            /** @example Musterfrau */
+            lastName: string;
+            /** @example Rechtsanwältin */
+            title?: string;
+            /** @example anna-musterfrau */
+            slugUrl?: string;
+            /** @example +49 30 1234567 */
+            phone?: string;
+            /** @example https://kanzlei.example */
+            website?: string;
+            /** @example https://cdn.example/avatars/123.png */
+            profileImageUrl?: string;
+            /** @example Unter den Linden */
+            street?: string;
+            /** @example 42 */
+            streetNumber?: string;
+            /** @example 10117 */
+            postalCode?: string;
+            /** @example Berlin */
+            city: string;
+            /** @example Berlin */
+            state?: string;
+            /**
+             * @default DE
+             * @example DE
+             */
+            country: string;
+            /** @example 52.5200 */
+            latitude?: string;
+            /** @example 13.4050 */
+            longitude?: string;
+            /** @example RA-12345 */
+            barNumber?: string;
+            /** @example 2010 */
+            admissionYear?: number;
+            /** @example Humboldt-Universität zu Berlin */
+            university?: string;
+            /** @example [
+             *       "de",
+             *       "en"
+             *     ] */
+            languages?: string[];
+            /** @example Kanzlei Musterfrau */
+            firmName?: string;
+            /** @enum {string} */
+            firmSize?: "SOLO" | "SMALL_2_10" | "MEDIUM_11_50" | "LARGE_51_PLUS";
+            /** @example 12 */
+            yearsExperience?: number;
+            /** @example 250 */
+            hourlyRate?: number;
+            /** @example 150 */
+            consultationRate?: number;
+            /** @enum {string} */
+            responseTime?: "WITHIN_1_HOUR" | "WITHIN_4_HOURS" | "WITHIN_24_HOURS" | "WITHIN_48_HOURS" | "WITHIN_WEEK";
+            /** @example true */
+            availableForCalls?: boolean;
+            /** @example true */
+            acceptsNewClients?: boolean;
+            /** @enum {string} */
+            profileVisibility?: "PUBLIC" | "PRIVATE" | "MEMBERS_ONLY";
+            /** @example true */
+            isVerified?: boolean;
+            /** @example Erfahrene Fachanwältin für Familienrecht. */
+            bio?: string;
+            /**
+             * @description Education information in JSON format
+             * @example {
+             *       "university": "Harvard Law School",
+             *       "degree": "JD",
+             *       "year": 2015
+             *     }
+             */
+            education?: Record<string, never>;
+            /**
+             * @description Certifications in JSON format
+             * @example {
+             *       "certifications": [
+             *         "Bar Admission",
+             *         "Family Law Specialist"
+             *       ]
+             *     }
+             */
+            certifications?: Record<string, never>;
+            /**
+             * @description Publications in JSON format
+             * @example {
+             *       "articles": [
+             *         "Law Review Article 2020"
+             *       ],
+             *       "books": []
+             *     }
+             */
+            publications?: Record<string, never>;
+            /**
+             * @description Awards and recognition in JSON format
+             * @example {
+             *       "awards": [
+             *         "Best Lawyer 2021",
+             *         "Super Lawyer 2020"
+             *       ]
+             *     }
+             */
+            awards?: Record<string, never>;
+            /**
+             * @description Social media links in JSON format
+             * @example {
+             *       "linkedin": "https://linkedin.com/in/lawyer",
+             *       "twitter": "@lawyer"
+             *     }
+             */
+            socialMedia?: Record<string, never>;
+            /**
+             * @description Business hours in JSON format
+             * @example {
+             *       "monday": "9:00-17:00",
+             *       "tuesday": "9:00-17:00",
+             *       "closed": [
+             *         "saturday",
+             *         "sunday"
+             *       ]
+             *     }
+             */
+            businessHours?: Record<string, never>;
+            consultationTypes?: ("IN_PERSON" | "VIDEO_CALL" | "PHONE_CALL" | "EMAIL_ONLY")[];
+        };
+        UpdateLawyerProfileDto: {
+            /** @example lawyer@example.com */
+            email?: string;
+            /** @example Anna */
+            firstName?: string;
+            /** @example Musterfrau */
+            lastName?: string;
+            /** @example Rechtsanwältin */
+            title?: string;
+            /** @example anna-musterfrau */
+            slugUrl?: string;
+            /** @example +49 30 1234567 */
+            phone?: string;
+            /** @example https://kanzlei.example */
+            website?: string;
+            /** @example https://cdn.example/avatars/123.png */
+            profileImageUrl?: string;
+            /** @example Unter den Linden */
+            street?: string;
+            /** @example 42 */
+            streetNumber?: string;
+            /** @example 10117 */
+            postalCode?: string;
+            /** @example Berlin */
+            city?: string;
+            /** @example Berlin */
+            state?: string;
+            /**
+             * @default DE
+             * @example DE
+             */
+            country: string;
+            /** @example 52.5200 */
+            latitude?: string;
+            /** @example 13.4050 */
+            longitude?: string;
+            /** @example RA-12345 */
+            barNumber?: string;
+            /** @example 2010 */
+            admissionYear?: number;
+            /** @example Humboldt-Universität zu Berlin */
+            university?: string;
+            /** @example [
+             *       "de",
+             *       "en"
+             *     ] */
+            languages?: string[];
+            /** @example Kanzlei Musterfrau */
+            firmName?: string;
+            /** @enum {string} */
+            firmSize?: "SOLO" | "SMALL_2_10" | "MEDIUM_11_50" | "LARGE_51_PLUS";
+            /** @example 12 */
+            yearsExperience?: number;
+            /** @example 250 */
+            hourlyRate?: number;
+            /** @example 150 */
+            consultationRate?: number;
+            /** @enum {string} */
+            responseTime?: "WITHIN_1_HOUR" | "WITHIN_4_HOURS" | "WITHIN_24_HOURS" | "WITHIN_48_HOURS" | "WITHIN_WEEK";
+            /** @example true */
+            availableForCalls?: boolean;
+            /** @example true */
+            acceptsNewClients?: boolean;
+            /** @enum {string} */
+            profileVisibility?: "PUBLIC" | "PRIVATE" | "MEMBERS_ONLY";
+            /** @example true */
+            isVerified?: boolean;
+            /** @example Erfahrene Fachanwältin für Familienrecht. */
+            bio?: string;
+            /**
+             * @description Education information in JSON format
+             * @example {
+             *       "university": "Harvard Law School",
+             *       "degree": "JD",
+             *       "year": 2015
+             *     }
+             */
+            education?: Record<string, never>;
+            /**
+             * @description Certifications in JSON format
+             * @example {
+             *       "certifications": [
+             *         "Bar Admission",
+             *         "Family Law Specialist"
+             *       ]
+             *     }
+             */
+            certifications?: Record<string, never>;
+            /**
+             * @description Publications in JSON format
+             * @example {
+             *       "articles": [
+             *         "Law Review Article 2020"
+             *       ],
+             *       "books": []
+             *     }
+             */
+            publications?: Record<string, never>;
+            /**
+             * @description Awards and recognition in JSON format
+             * @example {
+             *       "awards": [
+             *         "Best Lawyer 2021",
+             *         "Super Lawyer 2020"
+             *       ]
+             *     }
+             */
+            awards?: Record<string, never>;
+            /**
+             * @description Social media links in JSON format
+             * @example {
+             *       "linkedin": "https://linkedin.com/in/lawyer",
+             *       "twitter": "@lawyer"
+             *     }
+             */
+            socialMedia?: Record<string, never>;
+            /**
+             * @description Business hours in JSON format
+             * @example {
+             *       "monday": "9:00-17:00",
+             *       "tuesday": "9:00-17:00",
+             *       "closed": [
+             *         "saturday",
+             *         "sunday"
+             *       ]
+             *     }
+             */
+            businessHours?: Record<string, never>;
+            consultationTypes?: ("IN_PERSON" | "VIDEO_CALL" | "PHONE_CALL" | "EMAIL_ONLY")[];
         };
     };
     responses: never;
@@ -6226,6 +6597,82 @@ export interface operations {
             };
         };
     };
+    LawyerProfilesController_getOwn: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    LawyerProfilesController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateLawyerProfileDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    LawyerProfilesController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateLawyerProfileDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    LawyerProfilesController_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     FormsController_intake: {
         parameters: {
             query?: never;
@@ -6561,6 +7008,121 @@ export interface operations {
         requestBody?: never;
         responses: {
             201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    StatsController_overview: {
+        parameters: {
+            query?: {
+                /** @description Optional country filter (currently informational) */
+                country?: string;
+                /** @description Time window in days (max 365) */
+                days?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Overview stats returned */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    StatsController_practiceAreas: {
+        parameters: {
+            query?: {
+                /** @description Filter by country code (e.g., "de") */
+                country?: string;
+                /** @description Latitude for geographic search */
+                latitude?: number;
+                /** @description Longitude for geographic search */
+                longitude?: number;
+                /** @description Search radius in kilometers */
+                radius?: number;
+                /** @description Maximum number of results to return */
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Practice areas statistics returned */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    PracticeAreasController_list: {
+        parameters: {
+            query?: {
+                /** @description Language code for the primary translation (defaults to de) */
+                language?: string;
+                /** @description Filter practice areas that are available in the given country */
+                country?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    PracticeAreasController_detail: {
+        parameters: {
+            query?: {
+                /** @description Language code for the primary translation (defaults to de) */
+                language?: string;
+            };
+            header?: never;
+            path: {
+                identifier: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    PracticeAreasController_translations: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                identifier: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
