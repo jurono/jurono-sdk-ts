@@ -11,6 +11,13 @@ export interface BillingMetrics {
   monthlyTransactions: number;
   revenueGrowth: number;
   transactionGrowth: number;
+  // Optional fields for enhanced UI compatibility
+  currency?: string;
+  monthlyRecurringRevenue?: number;
+  activeSubscriptions?: number;
+  churnRate?: number;
+  customerLifetimeValue?: number;
+  totalSubscriptions?: number;
 }
 
 export interface RevenueChartData {
@@ -94,6 +101,11 @@ export class Billing {
     return this.client.request(`/billing/metrics?timeframe=${encodeURIComponent(params.timeframe)}`, 'GET');
   }
 
+  // Backwards-compatible alias for UI expectations
+  async getBillingMetrics(params: { timeframe: string }): Promise<ApiResponse<BillingMetrics>> {
+    return this.getMetrics(params);
+  }
+
   async getRevenueChart(params: { timeframe: string }): Promise<ApiResponse<RevenueChartData[]>> {
     return this.client.request(`/billing/revenue-chart?timeframe=${encodeURIComponent(params.timeframe)}`, 'GET');
   }
@@ -112,5 +124,10 @@ export class Billing {
 
   async getComprehensiveDashboard(params: { timeframe: string }): Promise<ApiResponse<ComprehensiveBillingData>> {
     return this.client.request(`/billing/comprehensive-dashboard?timeframe=${encodeURIComponent(params.timeframe)}`, 'GET');
+  }
+
+  // Backwards-compatible alias for UI expectations
+  async getComprehensiveBillingDashboard(params: { timeframe: string }): Promise<ApiResponse<ComprehensiveBillingData>> {
+    return this.getComprehensiveDashboard(params);
   }
 }

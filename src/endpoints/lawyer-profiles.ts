@@ -93,6 +93,17 @@ export interface LawyerProfile {
   status: 'active' | 'inactive' | 'suspended';
   createdAt: string;
   updatedAt: string;
+  // Optional alias fields for UI compatibility
+  city?: string;
+  country?: string;
+  admissionYear?: number;
+  hourlyRate?: number;
+  currency?: string;
+  practiceAreas?: string[];
+  averageRating?: number;
+  reviewCount?: number;
+  claimedByUserId?: string;
+  responseRate?: number;
 }
 
 export interface Education {

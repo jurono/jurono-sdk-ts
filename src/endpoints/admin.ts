@@ -14,6 +14,11 @@ export interface AdminAnalytics {
   userGrowth: number[];
   revenue: number[];
   organizationGrowth: number[];
+  // Optional recent activities for enhanced dashboards
+  recentActivities?: Array<{
+    description: string;
+    timestamp: string;
+  }>;
 }
 
 export interface UserMetrics {
@@ -150,11 +155,18 @@ export interface Subscription {
   id: string;
   userId: string;
   plan: string;
-  status: 'active' | 'cancelled' | 'expired';
+  status: 'active' | 'cancelled' | 'expired' | 'past_due' | 'trialing';
   startDate: string;
   endDate?: string;
   amount: number;
   currency: string;
+  // Optional fields for UI compatibility
+  organizationId?: string;
+  organizationName?: string;
+  stripeCustomerId?: string;
+  interval?: 'monthly' | 'yearly';
+  userCount?: number;
+  currentPeriodEnd?: string;
 }
 
 export interface SubscriptionDetails extends Subscription {
@@ -359,4 +371,17 @@ export class Admin {
       return this.client.request(`/admin/subscriptions/${id}/metadata`, 'PUT', options);
     }
   };
+
+  // Convenience wrappers to align with UI expectations
+  async getSubscriptionById(id: string): Promise<ApiResponse<SubscriptionDetails>> {
+    return this.subscriptions.getById(id);
+  }
+
+  async cancelSubscription(id: string, options: CancelOptions = {}): Promise<ApiResponse<CancelResponse>> {
+    return this.subscriptions.cancel(id, options);
+  }
+
+  async reactivateSubscription(id: string): Promise<ApiResponse<ReactivateResponse>> {
+    return this.subscriptions.reactivate(id);
+  }
 }
