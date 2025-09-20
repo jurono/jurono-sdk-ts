@@ -189,14 +189,45 @@ export class JuronoApiClient {
     // Note: AbortSignal.any() is not widely supported yet, so we'll use the first signal
     const signal = signals[0];
     
+    // Build headers dynamically based on body type
+    const headers: Record<string, string> = {
+      'Authorization': `Bearer ${this.apiKey}`,
+    };
+
+    // Determine proper body handling
+    let requestBody: any = undefined;
+    const upperMethod = method.toUpperCase();
+
+    if (body !== undefined && upperMethod !== 'GET' && upperMethod !== 'HEAD') {
+      const isFormData = (val: unknown): val is FormData => typeof FormData !== 'undefined' && val instanceof FormData;
+      const isURLSearchParams = (val: unknown): val is URLSearchParams => typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
+      const isBlob = (val: unknown): val is Blob => typeof Blob !== 'undefined' && val instanceof Blob;
+      const isArrayBuffer = (val: unknown): val is ArrayBuffer => typeof ArrayBuffer !== 'undefined' && val instanceof ArrayBuffer;
+      const isView = (val: unknown): val is ArrayBufferView => ArrayBuffer.isView ? ArrayBuffer.isView(val as any) : false;
+
+      if (isFormData(body)) {
+        // Let fetch set multipart boundary
+        requestBody = body;
+      } else if (isURLSearchParams(body)) {
+        headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+        requestBody = body.toString();
+      } else if (isBlob(body) || isArrayBuffer(body) || isView(body)) {
+        // Binary payloads; do not override content-type
+        requestBody = body as any;
+      } else if (typeof body === 'string') {
+        headers['Content-Type'] = 'text/plain;charset=UTF-8';
+        requestBody = body;
+      } else {
+        headers['Content-Type'] = 'application/json';
+        requestBody = JSON.stringify(body);
+      }
+    }
+
     const requestInit: RequestInit = {
-      method: method.toUpperCase(),
-      headers: {
-        'Authorization': `Bearer ${this.apiKey}`,
-        'Content-Type': 'application/json',
-      },
+      method: upperMethod,
+      headers,
       signal,
-      body: body ? JSON.stringify(body) : undefined,
+      body: requestBody,
     };
 
     const response = await this.retryRequest(
