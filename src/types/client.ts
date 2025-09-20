@@ -25,3 +25,20 @@ export interface ApiResponse<T = any> {
   statusText: string;
   headers: Record<string, string>;
 }
+
+export interface User {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  isActive: boolean;
+  emailVerified: boolean;
+  roles: string[];
+}
+
+export interface LoginResponse {
+  success: boolean;
+  token: string;
+  refreshToken: string;
+  user: User;
+}

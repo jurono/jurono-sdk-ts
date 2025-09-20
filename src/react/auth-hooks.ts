@@ -13,7 +13,7 @@ export interface AuthUser {
   firstName: string;
   lastName: string;
   email: string;
-  role: string;
+  roles: string[];
 }
 
 export interface UseLoginOptions {
@@ -49,15 +49,16 @@ export function useLogin(options: UseLoginOptions = {}): UseLoginResult {
       const responseData = response.data as any;
       
       const user = responseData.user || responseData;
-      const token = responseData.access_token || responseData.token || responseData.accessToken;
+      const token = responseData.token || responseData.access_token || responseData.accessToken;
       
       if (!user) {
         throw new Error('No user data returned from authentication');
       }
 
       if (requireAdminRole) {
-        const userRole = user.role;
-        if (!userRole || (userRole !== 'ADMIN' && userRole !== 'SUPER_ADMIN')) {
+        const userRoles = user.roles || [user.role];
+        const hasAdminRole = userRoles.some((role: string) => role === 'ADMIN' || role === 'SUPER_ADMIN');
+        if (!hasAdminRole) {
           throw new Error('Admin access required');
         }
       }
@@ -71,7 +72,7 @@ export function useLogin(options: UseLoginOptions = {}): UseLoginResult {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        role: user.role,
+        roles: user.roles || [user.role].filter(Boolean),
       };
 
       setState({ loading: false, error: null, success: true });
@@ -130,15 +131,16 @@ export function useAuthManager(options: UseAuthManagerOptions = {}): UseAuthMana
       const responseData = response.data as any;
       
       const userData = responseData.user || responseData;
-      const token = responseData.access_token || responseData.token || responseData.accessToken;
+      const token = responseData.token || responseData.access_token || responseData.accessToken;
       
       if (!userData) {
         throw new Error('No user data returned from authentication');
       }
 
       if (requireAdminRole) {
-        const userRole = userData.role;
-        if (!userRole || (userRole !== 'ADMIN' && userRole !== 'SUPER_ADMIN')) {
+        const userRoles = userData.roles || [userData.role];
+        const hasAdminRole = userRoles.some((role: string) => role === 'ADMIN' || role === 'SUPER_ADMIN');
+        if (!hasAdminRole) {
           throw new Error('Admin access required');
         }
       }
@@ -152,7 +154,7 @@ export function useAuthManager(options: UseAuthManagerOptions = {}): UseAuthMana
         firstName: userData.firstName,
         lastName: userData.lastName,
         email: userData.email,
-        role: userData.role,
+        roles: userData.roles || [userData.role].filter(Boolean),
       };
 
       setUser(authUser);
@@ -209,8 +211,9 @@ export function useAuthManager(options: UseAuthManagerOptions = {}): UseAuthMana
       }
 
       if (requireAdminRole) {
-        const userRole = refreshedUser.role;
-        if (!userRole || (userRole !== 'ADMIN' && userRole !== 'SUPER_ADMIN')) {
+        const userRoles = refreshedUser.roles || [refreshedUser.role];
+        const hasAdminRole = userRoles.some((role: string) => role === 'ADMIN' || role === 'SUPER_ADMIN');
+        if (!hasAdminRole) {
           throw new Error('Admin access required');
         }
       }
@@ -220,7 +223,7 @@ export function useAuthManager(options: UseAuthManagerOptions = {}): UseAuthMana
         firstName: refreshedUser.firstName,
         lastName: refreshedUser.lastName,
         email: refreshedUser.email,
-        role: refreshedUser.role,
+        roles: refreshedUser.roles || [refreshedUser.role].filter(Boolean),
       };
 
       setUser(authUser);

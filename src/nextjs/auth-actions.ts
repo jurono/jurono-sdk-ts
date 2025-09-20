@@ -12,7 +12,7 @@ export interface AuthResult {
     firstName: string;
     lastName: string;
     email: string;
-    role: string;
+    roles: string[];
   };
 }
 
@@ -21,7 +21,7 @@ export interface AdminUser {
   firstName: string;
   lastName: string;
   email: string;
-  role: string;
+  roles: string[];
 }
 
 /**
@@ -59,15 +59,16 @@ export async function login(
     // Extract user data and token from SDK response
     const responseData = response.data as any;
     const user = responseData.user || responseData;
-    const accessToken = responseData.access_token || responseData.token || responseData.accessToken;
+    const accessToken = responseData.token || responseData.access_token || responseData.accessToken;
     
     if (!user) {
       return { success: false, error: 'No user data returned from authentication' };
     }
 
     if (requireAdminRole) {
-      const userRole = user.role;
-      if (!userRole || (userRole !== 'ADMIN' && userRole !== 'SUPER_ADMIN')) {
+      const userRoles = user.roles || [user.role];
+      const hasAdminRole = userRoles.some((role: string) => role === 'ADMIN' || role === 'SUPER_ADMIN');
+      if (!hasAdminRole) {
         return { success: false, error: 'Admin access required' };
       }
     }
@@ -86,14 +87,14 @@ export async function login(
       path: '/',
     });
     
-    return { 
+    return {
       success: true,
       user: {
         id: user.id,
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        role: user.role,
+        roles: user.roles || [user.role].filter(Boolean),
       }
     };
   } catch (error) {
@@ -154,8 +155,9 @@ export async function getUser(
     }
 
     if (requireAdminRole) {
-      const userRole = user.role;
-      if (!userRole || (userRole !== 'ADMIN' && userRole !== 'SUPER_ADMIN')) {
+      const userRoles = user.roles || [user.role];
+      const hasAdminRole = userRoles.some((role: string) => role === 'ADMIN' || role === 'SUPER_ADMIN');
+      if (!hasAdminRole) {
         return null;
       }
     }
@@ -165,7 +167,7 @@ export async function getUser(
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
-      role: user.role,
+      roles: user.roles || [user.role].filter(Boolean),
     };
   } catch (error) {
     console.error('[Jurono SDK] Get user error:', error);
@@ -255,7 +257,7 @@ export async function refresh(
     const response = await sdk.auth.refresh({ refreshToken: token.value });
     const responseData = response.data as any;
     
-    const newToken = responseData.access_token || responseData.token || responseData.accessToken;
+    const newToken = responseData.token || responseData.access_token || responseData.accessToken;
     const user = responseData.user || responseData;
     
     if (!newToken) {
@@ -271,14 +273,14 @@ export async function refresh(
       path: '/',
     });
     
-    return { 
+    return {
       success: true,
       user: user ? {
         id: user.id,
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        role: user.role,
+        roles: user.roles || [user.role].filter(Boolean),
       } : undefined
     };
   } catch (error) {

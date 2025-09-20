@@ -1,13 +1,13 @@
 import { JuronoApiClient } from '../client';
 import type { components } from '../types/api';
-import type { ApiResponse } from '../types';
+import type { ApiResponse, LoginResponse } from '../types';
 
 // Type definitions for operations (using available operations from OpenAPI spec)
 
 export class Auth {
   constructor(private client: JuronoApiClient) {}
 
-  async login(data: components["schemas"]["LoginDto"]): Promise<ApiResponse<Record<string, unknown>>> {
+  async login(data: components["schemas"]["LoginDto"]): Promise<ApiResponse<LoginResponse>> {
     return this.client.request('/auth/login', 'POST', data);
   }
 
